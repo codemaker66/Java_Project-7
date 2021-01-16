@@ -1,11 +1,8 @@
 package com.nnk.springboot.domain;
 
-import org.springframework.beans.factory.annotation.Required;
-
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity
@@ -13,29 +10,32 @@ import java.sql.Timestamp;
 public class BidList {
 
 	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
-	Integer BidListId;
-	String account;
-	String type;
-	Double bidQuantity;
-	Double askQuantity;
-	Double bid;
-	Double ask;
-	String benchmark;
-	Timestamp bidListDate;
-	String commentary;
-	String security;
-	String status;
-	String trader;
-	String book;
-	String creationName;
-	Timestamp creationDate;
-	String revisionName;
-	Timestamp revisionDate;
-	String dealName;
-	String dealType;
-	String sourceListId;
-	String side;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer BidListId;
+	@NotBlank(message = "Account is mandatory")
+	private String account;
+	@NotBlank(message = "Type is mandatory")
+	private String type;
+	@DecimalMin(value = "1.0", message = "Bid quantity minimum value is 1.0")
+	private Double bidQuantity;
+	private Double askQuantity;
+	private Double bid;
+	private Double ask;
+	private String benchmark;
+	private Timestamp bidListDate;
+	private String commentary;
+	private String security;
+	private String status;
+	private String trader;
+	private String book;
+	private String creationName;
+	private Timestamp creationDate;
+	private String revisionName;
+	private Timestamp revisionDate;
+	private String dealName;
+	private String dealType;
+	private String sourceListId;
+	private String side;
 
 	public Integer getBidListId() {
 		return BidListId;

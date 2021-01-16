@@ -1,24 +1,25 @@
 package com.nnk.springboot.domain;
 
-import org.hibernate.validator.constraints.Length;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "curvepoint")
 public class CurvePoint {
-	
+
 	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
-	Integer id;
-	Integer curveId;
-	Timestamp asOfDate;
-	Double term;
-	Double value;
-	Timestamp creationDate;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	@NotNull(message = "CurveId is mandatory")
+	private Integer curveId;
+	private Timestamp asOfDate;
+	@DecimalMin(value = "1.0", message = "term minimum value is 1.0")
+	private Double term;
+	@DecimalMin(value = "1.0", message = "value minimum value is 1.0")
+	private Double value;
+	private Timestamp creationDate;
 
 	public Integer getId() {
 		return id;

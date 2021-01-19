@@ -23,6 +23,12 @@ public class UserController {
 	private UserRepository userRepository;
 	private static final Logger logger = LogManager.getLogger(UserController.class);
 
+	/**
+	 * This method call the UserRepository to retrieve the list of all the users.
+	 * 
+	 * @param model represent Java-5-specific interface that defines a holder for model attributes.
+	 * @return the view that display the user list.
+	 */
 	@GetMapping("/user/list")
 	public String home(Model model) {
 		logger.info("The user requested the url : /user/list with the GET method");
@@ -30,12 +36,25 @@ public class UserController {
 		return "user/list";
 	}
 
+	/**
+	 * This method display the needed view for adding a new user.
+	 * 
+	 * @return the view that display a form for adding a new user.
+	 */
 	@GetMapping("/user/add")
-	public String addUser(User bid) {
+	public String addUser() {
 		logger.info("The user requested the url : /user/add with the GET method");
 		return "user/add";
 	}
 
+	/**
+	 * This method call the UserRepository to add the new user to the database.
+	 * 
+	 * @param user is an object of type User.
+	 * @param result is a general interface that represents binding results.
+	 * @param model represent Java-5-specific interface that defines a holder for model attributes.
+	 * @return a redirection to the user list if the request was successful.
+	 */
 	@PostMapping("/user/validate")
 	public String validate(@Valid User user, BindingResult result, Model model) {
 		logger.info("The user requested the url : /user/validate with the POST method");
@@ -48,6 +67,13 @@ public class UserController {
 		return "user/add";
 	}
 
+	/**
+	 * This method display the needed view for updating a user.
+	 * 
+	 * @param id represent the id of the user.
+	 * @param model represent Java-5-specific interface that defines a holder for model attributes.
+	 * @return the view that display a form for updating the user.
+	 */
 	@GetMapping("/user/update/{id}")
 	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
 		logger.info("The user requested the url : /user/update/" + id + " with the GET method");
@@ -58,6 +84,15 @@ public class UserController {
 		return "user/update";
 	}
 
+	/**
+	 * This method call the UserRepository to update a user in the database.
+	 * 
+	 * @param id represent the id of the user.
+	 * @param user is an object of type User.
+	 * @param result is a general interface that represents binding results.
+	 * @param model represent Java-5-specific interface that defines a holder for model attributes.
+	 * @return a redirection to the user list if the request was successful.
+	 */
 	@PostMapping("/user/update/{id}")
 	public String updateUser(@PathVariable("id") Integer id, @Valid User user, BindingResult result, Model model) {
 		logger.info("The user requested the url : /user/update/" + id + " with the POST method");
@@ -72,6 +107,13 @@ public class UserController {
 		return "redirect:/user/list";
 	}
 
+	/**
+	 * This method call the UserRepository to delete a user from the database.
+	 * 
+	 * @param id represent the id of the user.
+	 * @param model represent Java-5-specific interface that defines a holder for model attributes.
+	 * @return a redirection to the user list if the request was successful.
+	 */
 	@GetMapping("/user/delete/{id}")
 	public String deleteUser(@PathVariable("id") Integer id, Model model) {
 		logger.info("The user requested the url : /user/delete/" + id + " with the GET method");

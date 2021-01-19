@@ -22,6 +22,12 @@ public class CurveController {
 	CurvePointRepository curvePointRepository;
 	private static final Logger logger = LogManager.getLogger(CurveController.class);
 
+	/**
+	 * This method call the CurvePointRepository to retrieve the list of all the curvePoints.
+	 * 
+	 * @param model represent Java-5-specific interface that defines a holder for model attributes.
+	 * @return the view that display the curvePoint list.
+	 */
 	@GetMapping("/curvePoint/list")
 	public String home(Model model) {
 		logger.info("The user requested the url : /curvePoint/list with the GET method");
@@ -29,12 +35,25 @@ public class CurveController {
 		return "curvePoint/list";
 	}
 
+	/**
+	 * This method display the needed view for adding a new curvePoint.
+	 * 
+	 * @return the view that display a form for adding a new curvePoint.
+	 */
 	@GetMapping("/curvePoint/add")
-	public String addBidForm(CurvePoint bid) {
+	public String addCurvePointForm() {
 		logger.info("The user requested the url : /curvePoint/add with the GET method");
 		return "curvePoint/add";
 	}
 
+	/**
+	 * This method call the CurvePointRepository to add the new curvePoint to the database.
+	 * 
+	 * @param curvePoint is an object of type CurvePoint.
+	 * @param result is a general interface that represents binding results.
+	 * @param model represent Java-5-specific interface that defines a holder for model attributes.
+	 * @return a redirection to the curvePoint list if the request was successful.
+	 */
 	@PostMapping("/curvePoint/validate")
 	public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
 		logger.info("The user requested the url : /curvePoint/validate with the POST method");
@@ -45,6 +64,13 @@ public class CurveController {
 		return "curvePoint/add";
 	}
 
+	/**
+	 * This method display the needed view for updating a curvePoint.
+	 * 
+	 * @param id represent the id of the curvePoint.
+	 * @param model represent Java-5-specific interface that defines a holder for model attributes.
+	 * @return the view that display a form for updating the curvePoint.
+	 */
 	@GetMapping("/curvePoint/update/{id}")
 	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
 		logger.info("The user requested the url : /curvePoint/update/" + id + " with the GET method");
@@ -54,8 +80,17 @@ public class CurveController {
 		return "curvePoint/update";
 	}
 
+	/**
+	 * This method call the CurvePointRepository to update a curvePoint in the database.
+	 * 
+	 * @param id represent the id of the curvePoint.
+	 * @param curvePoint is an object of type CurvePoint.
+	 * @param result is a general interface that represents binding results.
+	 * @param model represent Java-5-specific interface that defines a holder for model attributes.
+	 * @return a redirection to the curvePoint list if the request was successful.
+	 */
 	@PostMapping("/curvePoint/update/{id}")
-	public String updateBid(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint, BindingResult result,
+	public String updateCurvePoint(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint, BindingResult result,
 			Model model) {
 		logger.info("The user requested the url : /curvePoint/update/" + id + " with the POST method");
 		if (result.hasErrors()) {
@@ -66,8 +101,15 @@ public class CurveController {
 		return "redirect:/curvePoint/list";
 	}
 
+	/**
+	 * This method call the CurvePointRepository to delete a curvePoint from the database.
+	 * 
+	 * @param id represent the id of the curvePoint.
+	 * @param model represent Java-5-specific interface that defines a holder for model attributes.
+	 * @return a redirection to the curvePoint list if the request was successful.
+	 */
 	@GetMapping("/curvePoint/delete/{id}")
-	public String deleteBid(@PathVariable("id") Integer id, Model model) {
+	public String deleteCurvePoint(@PathVariable("id") Integer id, Model model) {
 		logger.info("The user requested the url : /curvePoint/delete/" + id + " with the GET method");
 		CurvePoint curvePoint = curvePointRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid curvePoint Id:" + id));

@@ -22,6 +22,12 @@ public class RatingController {
 	RatingRepository ratingRepository;
 	private static final Logger logger = LogManager.getLogger(RatingController.class);
 
+	/**
+	 * This method call the RatingRepository to retrieve the list of all the ratings.
+	 * 
+	 * @param model represent Java-5-specific interface that defines a holder for model attributes.
+	 * @return the view that display the rating list.
+	 */
 	@GetMapping("/rating/list")
 	public String home(Model model) {
 		logger.info("The user requested the url : /rating/list with the GET method");
@@ -29,12 +35,25 @@ public class RatingController {
 		return "rating/list";
 	}
 
+	/**
+	 * This method display the needed view for adding a new rating.
+	 * 
+	 * @return the view that display a form for adding a new rating.
+	 */
 	@GetMapping("/rating/add")
-	public String addRatingForm(Rating rating) {
+	public String addRatingForm() {
 		logger.info("The user requested the url : /rating/add with the GET method");
 		return "rating/add";
 	}
 
+	/**
+	 * This method call the RatingRepository to add the new rating to the database.
+	 * 
+	 * @param rating is an object of type Rating.
+	 * @param result is a general interface that represents binding results.
+	 * @param model represent Java-5-specific interface that defines a holder for model attributes.
+	 * @return a redirection to the rating list if the request was successful.
+	 */
 	@PostMapping("/rating/validate")
 	public String validate(@Valid Rating rating, BindingResult result, Model model) {
 		logger.info("The user requested the url : /rating/validate with the POST method");
@@ -45,6 +64,13 @@ public class RatingController {
 		return "rating/add";
 	}
 
+	/**
+	 * This method display the needed view for updating a rating.
+	 * 
+	 * @param id represent the id of the rating.
+	 * @param model represent Java-5-specific interface that defines a holder for model attributes.
+	 * @return the view that display a form for updating the rating.
+	 */
 	@GetMapping("/rating/update/{id}")
 	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
 		logger.info("The user requested the url : /rating/update/" + id + " with the GET method");
@@ -54,6 +80,15 @@ public class RatingController {
 		return "rating/update";
 	}
 
+	/**
+	 * This method call the RatingRepository to update a rating in the database.
+	 * 
+	 * @param id represent the id of the rating.
+	 * @param rating is an object of type Rating.
+	 * @param result is a general interface that represents binding results.
+	 * @param model represent Java-5-specific interface that defines a holder for model attributes.
+	 * @return a redirection to the rating list if the request was successful.
+	 */
 	@PostMapping("/rating/update/{id}")
 	public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating, BindingResult result,
 			Model model) {
@@ -66,6 +101,13 @@ public class RatingController {
 		return "redirect:/rating/list";
 	}
 
+	/**
+	 * This method call the RatingRepository to delete a rating from the database.
+	 * 
+	 * @param id represent the id of the rating.
+	 * @param model represent Java-5-specific interface that defines a holder for model attributes.
+	 * @return a redirection to the rating list if the request was successful.
+	 */
 	@GetMapping("/rating/delete/{id}")
 	public String deleteRating(@PathVariable("id") Integer id, Model model) {
 		logger.info("The user requested the url : /rating/delete/" + id + " with the GET method");

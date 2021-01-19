@@ -13,6 +13,11 @@ public class LoginController {
 
 	private static final Logger logger = LogManager.getLogger(LoginController.class);
 
+	/**
+	 * This method display the login form.
+	 * 
+	 * @return the view that display the login form.
+	 */
 	@GetMapping("login")
 	public ModelAndView login() {
 		logger.info("The user requested the login url with the GET method");
@@ -21,6 +26,11 @@ public class LoginController {
 		return mav;
 	}
 
+	/**
+	 * This method display the error page.
+	 * 
+	 * @return the view that display the error page.
+	 */
 	@GetMapping("error")
 	public ModelAndView error() {
 		logger.info("The user was redirected to the error page");

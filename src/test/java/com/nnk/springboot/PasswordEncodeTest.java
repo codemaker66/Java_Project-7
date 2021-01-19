@@ -1,21 +1,30 @@
 package com.nnk.springboot;
 
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.context.junit4.SpringRunner;
+import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Created by Khang Nguyen.
- * Email: khang.nguyen@banvien.com
- * Date: 09/03/2019
- * Time: 11:26 AM
- */
-@SpringBootTest
-public class PasswordEncodeTest {
-    //@Test
-    public void testPassword() {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String pw = encoder.encode("123456");
-        System.out.println("[ "+ pw + " ]");
-    }
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class PasswordEncodeTest {
+
+	@LocalServerPort
+	private int port;
+
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	@Test
+	void testPassword() {
+
+		// When
+		String password = bCryptPasswordEncoder.encode("123456");
+
+		// Then
+		assertThat(password).isNotEqualTo("123456");
+		System.out.println("The hashed password is : [ " + password + " ]");
+	}
 }

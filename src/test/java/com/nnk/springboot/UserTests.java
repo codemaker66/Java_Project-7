@@ -1,8 +1,9 @@
 package com.nnk.springboot;
 
-import com.nnk.springboot.domain.BidList;
-import com.nnk.springboot.repositories.BidListRepository;
-import com.nnk.springboot.service.TruncateService;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -16,74 +17,74 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.TestPropertySource;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-import java.util.Optional;
+import com.nnk.springboot.domain.User;
+import com.nnk.springboot.repositories.UserRepository;
+import com.nnk.springboot.service.TruncateService;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:application-test.properties")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class BidTests {
+class UserTests {
 
 	@LocalServerPort
 	private int port;
 
 	@Autowired
-	private BidListRepository bidListRepository;
+	private UserRepository userRepository;
 
 	@Autowired
 	private TruncateService truncateService;
 
-	private BidList bid = new BidList();
+	private User user = new User();
 
 	@BeforeAll
 	void init() {
 
-		bid.setAccount("Account Test");
-		bid.setType("Type Test");
-		bid.setBidQuantity(10d);
+		user.setUsername("username");
+		user.setPassword("h4sh&dPass");
+		user.setFullname("user name");
+		user.setRole("USER");
 
 	}
 
 	@AfterAll
 	void clearTable() {
-		truncateService.truncatebidList();
+		truncateService.truncateUsers();
 	}
 
 	@Test
 	@Order(1)
-	void createABid() {
+	void createAUser() {
 
 		// When
-		bid = bidListRepository.save(bid);
+		user = userRepository.save(user);
 
 		// Then
-		assertThat(bid.getBidListId()).isNotNull();
-		assertThat(bid.getBidQuantity()).isEqualTo(10d);
+		assertThat(user.getId()).isNotNull();
+		assertThat(user.getUsername()).isEqualTo("username");
 	}
 
 	@Test
 	@Order(2)
-	void updateABid() {
+	void updateAUser() {
 
 		// Given
-		bid.setBidQuantity(20d);
+		user.setUsername("username99");
 
 		// When
-		bid = bidListRepository.save(bid);
+		user = userRepository.save(user);
 
 		// Then
-		assertThat(bid.getBidQuantity()).isEqualTo(20d);
+		assertThat(user.getUsername()).isEqualTo("username99");
 	}
 
 	@Test
 	@Order(3)
-	void findBids() {
+	void findUsers() {
 
 		// When
-		List<BidList> listResult = bidListRepository.findAll();
+		List<User> listResult = userRepository.findAll();
 
 		// Then
 		assertThat(listResult.size() > 0).isTrue();
@@ -91,16 +92,17 @@ class BidTests {
 
 	@Test
 	@Order(4)
-	void deleteABid() {
+	void deleteAUser() {
 
 		// Given
-		Integer id = bid.getBidListId();
+		Integer id = user.getId();
 
 		// When
-		bidListRepository.delete(bid);
+		userRepository.delete(user);
 
 		// Then
-		Optional<BidList> bidList = bidListRepository.findById(id);
-		assertThat(bidList.isPresent()).isFalse();
+		Optional<User> userList = userRepository.findById(id);
+		assertThat(userList.isPresent()).isFalse();
 	}
+
 }

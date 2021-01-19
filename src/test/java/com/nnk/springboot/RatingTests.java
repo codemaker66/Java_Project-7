@@ -2,41 +2,106 @@ package com.nnk.springboot;
 
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.repositories.RatingRepository;
+import com.nnk.springboot.service.TruncateService;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.test.context.TestPropertySource;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.Optional;
 
-@SpringBootTest
-public class RatingTests {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource(locations = "classpath:application-test.properties")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class RatingTests {
+
+	@LocalServerPort
+	private int port;
 
 	@Autowired
 	private RatingRepository ratingRepository;
 
-	//@Test
-	public void ratingTest() {
-		/*Rating rating = new Rating("Moodys Rating", "Sand PRating", "Fitch Rating", 10);
+	@Autowired
+	private TruncateService truncateService;
 
-		// Save
+	private Rating rating = new Rating();
+
+	@BeforeAll
+	void init() {
+
+		rating.setMoodysRating("Moodys Rating");
+		rating.setSandPRating("Sand PRating");
+		rating.setFitchRating("Fitch Rating");
+		rating.setOrderNumber(10);
+
+	}
+
+	@AfterAll
+	void clearTable() {
+		truncateService.truncateRating();
+	}
+
+	@Test
+	@Order(1)
+	void createARating() {
+
+		// When
 		rating = ratingRepository.save(rating);
-		Assert.assertNotNull(rating.getId());
-		Assert.assertTrue(rating.getOrderNumber() == 10);
 
-		// Update
+		// Then
+		assertThat(rating.getId()).isNotNull();
+		assertThat(rating.getOrderNumber()).isEqualTo(10);
+	}
+
+	@Test
+	@Order(2)
+	void updateARating() {
+
+		// Given
 		rating.setOrderNumber(20);
+
+		// When
 		rating = ratingRepository.save(rating);
-		Assert.assertTrue(rating.getOrderNumber() == 20);
 
-		// Find
+		// Then
+		assertThat(rating.getOrderNumber()).isEqualTo(20);
+	}
+
+	@Test
+	@Order(3)
+	void findRatings() {
+
+		// When
 		List<Rating> listResult = ratingRepository.findAll();
-		Assert.assertTrue(listResult.size() > 0);
 
-		// Delete
+		// Then
+		assertThat(listResult.size() > 0).isTrue();
+	}
+
+	@Test
+	@Order(4)
+	void deleteARating() {
+
+		// Given
 		Integer id = rating.getId();
+
+		// When
 		ratingRepository.delete(rating);
+
+		// Then
 		Optional<Rating> ratingList = ratingRepository.findById(id);
-		Assert.assertFalse(ratingList.isPresent());*/
+		assertThat(ratingList.isPresent()).isFalse();
 	}
 }

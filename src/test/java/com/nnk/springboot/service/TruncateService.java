@@ -30,6 +30,7 @@ public class TruncateService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
 
 	public void truncatebidList() {
 		bidListRepository.truncateBidList();

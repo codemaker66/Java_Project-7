@@ -41,7 +41,7 @@ public class RuleNameController {
 	 * @return the view that display a form for adding a new ruleName.
 	 */
 	@GetMapping("/ruleName/add")
-	public String addRuleForm() {
+	public String addRuleForm(RuleName ruleName) {
 		logger.info("The user requested the url : /ruleName/add with the GET method");
 		return "ruleName/add";
 	}

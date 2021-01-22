@@ -41,7 +41,7 @@ public class CurveController {
 	 * @return the view that display a form for adding a new curvePoint.
 	 */
 	@GetMapping("/curvePoint/add")
-	public String addCurvePointForm() {
+	public String addCurvePointForm(CurvePoint curvePoint) {
 		logger.info("The user requested the url : /curvePoint/add with the GET method");
 		return "curvePoint/add";
 	}

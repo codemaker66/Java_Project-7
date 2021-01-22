@@ -42,7 +42,7 @@ public class UserController {
 	 * @return the view that display a form for adding a new user.
 	 */
 	@GetMapping("/user/add")
-	public String addUser() {
+	public String addUser(User user) {
 		logger.info("The user requested the url : /user/add with the GET method");
 		return "user/add";
 	}

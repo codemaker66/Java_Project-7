@@ -41,7 +41,7 @@ public class RatingController {
 	 * @return the view that display a form for adding a new rating.
 	 */
 	@GetMapping("/rating/add")
-	public String addRatingForm() {
+	public String addRatingForm(Rating rating) {
 		logger.info("The user requested the url : /rating/add with the GET method");
 		return "rating/add";
 	}

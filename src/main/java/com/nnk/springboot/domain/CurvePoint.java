@@ -16,9 +16,9 @@ public class CurvePoint {
 	@NotNull(message = "CurveId is mandatory")
 	private Integer curveId;
 	private Timestamp asOfDate;
-	@DecimalMin(value = "1.0", message = "term minimum value is 1.0")
+	@DecimalMin(value = "1.0", message = "Term minimum value is 1.0")
 	private Double term;
-	@DecimalMin(value = "1.0", message = "value minimum value is 1.0")
+	@DecimalMin(value = "1.0", message = "Value minimum value is 1.0")
 	private Double value;
 	private Timestamp creationDate;
 

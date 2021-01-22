@@ -41,7 +41,7 @@ public class TradeController {
 	 * @return the view that display a form for adding a new trade.
 	 */
 	@GetMapping("/trade/add")
-	public String addTrade() {
+	public String addTrade(Trade trade) {
 		logger.info("The user requested the url : /trade/add with the GET method");
 		return "trade/add";
 	}

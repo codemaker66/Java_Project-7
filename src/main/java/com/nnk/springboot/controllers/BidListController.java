@@ -41,7 +41,7 @@ public class BidListController {
 	 * @return the view that display a form for adding a new bid.
 	 */
 	@GetMapping("/bidList/add")
-	public String addBidForm() {
+	public String addBidForm(BidList bidList) {
 		logger.info("The user requested the url : /bidList/add with the GET method");
 		return "bidList/add";
 	}

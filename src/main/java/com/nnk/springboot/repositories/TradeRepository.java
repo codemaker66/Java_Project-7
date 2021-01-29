@@ -15,4 +15,5 @@ public interface TradeRepository extends JpaRepository<Trade, Integer> {
 	@Transactional
 	@Query(value = "TRUNCATE TABLE trade", nativeQuery = true)
 	void truncateTrade();
+
 }

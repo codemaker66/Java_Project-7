@@ -15,4 +15,5 @@ public interface RuleNameRepository extends JpaRepository<RuleName, Integer> {
 	@Transactional
 	@Query(value = "TRUNCATE TABLE rulename", nativeQuery = true)
 	void truncateRuleName();
+
 }
